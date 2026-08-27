@@ -9,7 +9,7 @@ Campos marcados `TODO` precisam ser preenchidos por você antes da primeira publ
 
 - **Empresa:** TODO (nome comercial)
 - **Vertical ativa:** limpeza e manutenção predial (residencial + comercial)
-- **Mercado geográfico:** TODO (cidade, região metropolitana, raio de atendimento)
+- **Mercado geográfico:** Flórida, EUA. Cidade e raio de atendimento: TODO
 - **Idioma do conteúdo:** inglês (EUA)
 - **Idioma do trabalho interno:** português
 
@@ -17,6 +17,27 @@ Campos marcados `TODO` precisam ser preenchidos por você antes da primeira publ
 > visualizações nacionais e nenhuma na área de atendimento não gera orçamento.
 > Toda peça deve ter pelo menos um gancho local: o estado, a lei estadual, a
 > data do calendário local, o preço praticado na região.
+
+### O que ser da Flórida muda no conteúdo
+
+Legislação de referência para peças de `moveinout`: **Fla. Stat. 83.49**. Prazo de 15
+dias para devolver quando não há retenção, 30 dias para notificar por escrito quando há,
+perda do direito de reter se o prazo estourar, 15 dias para o inquilino contestar, e
+honorários de advogado para a parte vencedora. Desde 1 de julho de 2025 a notificação
+pode ir por e-mail, se as duas partes concordaram por escrito (HB 615, Fla. Stat. 83.505).
+
+A Flórida também reordena a prioridade das tendências. Três serviços saem na frente aqui
+por razões estruturais, não sazonais:
+
+- `powerwash` — clima subtropical, mofo e limo em fachada o ano inteiro, mais temporada
+  de furacões de junho a novembro. É o serviço com maior demanda recorrente do estado.
+- `rental` — densidade de aluguel de temporada entre as maiores do país, turnover alto
+  o ano todo em vez de concentrado no verão.
+- `moveinout` — mercado de locação grande e rotativo, com influxo constante de quem
+  chega de fora do estado.
+
+Neve, isolamento térmico, preparação de inverno e degelo não existem aqui. Nunca
+produzir peça sazonal de clima frio.
 
 ## 2. Serviços (categorias canônicas)
 

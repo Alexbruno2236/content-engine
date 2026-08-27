@@ -62,21 +62,28 @@ compete com gordura saindo de uma boca de fogão em tempo real.
 ## Ferramentas
 
 ```bash
-python3 tools/beats.py <arquivo>   # timecodes cumulativos a 2,5 palavras por segundo
+# timecodes cumulativos a 2,5 palavras por segundo
+python3 tools/beats.py output/<slug>/beats.txt
+
+# monta o .txt de prompts anexando style block e closer a cada cena
+python3 tools/build_prompts.py output/<slug>/scenes.txt --ratio 9:16 \
+  > output/<slug>/<slug>-prompts.txt
 ```
 
 ## Piloto
 
-`output/co-deposit-rule-2026/` é a primeira peça completa: as novas leis de caução de
-2026, 60 segundos, 26 beats. Serve para medir custo e tempo reais de ponta a ponta
-antes de industrializar.
+`output/fl-deposit-deadline-2026/` é a peça de referência: o prazo de caução da Flórida
+sob a Fla. Stat. 83.49, 60 segundos, 27 beats, 150 palavras. Serve para medir custo e
+tempo reais de ponta a ponta antes de industrializar.
+
+`output/co-deposit-rule-2026/` é a versão do Colorado, escrita antes do mercado ser
+definido. Fica como modelo de estrutura, marcada como não publicável.
 
 ## Antes da primeira publicação
 
-Preencher os campos `TODO` em `brand/DNA.md`: nome da empresa, mercado geográfico e
-legenda padrão. O piloto usa a legislação do Colorado. Se a área de atendimento for
-outro estado, o roteiro precisa ser refeito com a lei correta. A estrutura se mantém,
-os números mudam.
+Preencher os `TODO` restantes em `brand/DNA.md`: nome da empresa, cidade e raio de
+atendimento, e a legenda padrão. O mercado já está definido como Flórida, e é isso que
+determina a legislação citada e a prioridade das tendências.
 
 ## Roadmap
 

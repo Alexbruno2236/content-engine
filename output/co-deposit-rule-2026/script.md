@@ -1,3 +1,8 @@
+> **NÃO PUBLICAR.** Peça de referência, escrita antes do mercado ser definido. A
+> legislação é do Colorado e o mercado atendido é a Flórida. A versão de produção é
+> `output/fl-deposit-deadline-2026/`. Este arquivo fica como modelo de estrutura para
+> adaptar a lei de outro estado.
+
 TARGET: 150 palavras / 60 segundos
 SERVIÇO: `moveinout`
 ESTILO: motion-design · 9:16

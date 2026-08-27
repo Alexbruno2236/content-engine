@@ -1,30 +1,47 @@
 # FILA DE PRODUÇÃO
 
+Mercado: **Flórida**. Toda peça precisa de gancho local. Nunca produzir sazonalidade de
+clima frio.
+
 ## Produzido
 
-| Data | Tópico | Slug | Serviço | Trilho | Status |
-|------|--------|------|---------|--------|--------|
-| 2026-08-27 | Leis de caução de 2026 (CO HB25-1249) | `co-deposit-rule-2026` | `moveinout` | A | roteiro e prompts prontos, imagens pendentes |
+| Data | Slug | Serviço | Trilho | Status |
+|------|------|---------|--------|--------|
+| 2026-08-27 | `fl-deposit-deadline-2026` | `moveinout` | A | roteiro e 27 prompts prontos, imagens pendentes |
+
+## Referência, não publicar
+
+| Slug | Motivo |
+|------|--------|
+| `co-deposit-rule-2026` | Legislação do Colorado. Produzido antes do mercado ser definido. Serve como modelo de estrutura para adaptar a lei de outro estado, nunca para publicação na Flórida. |
 
 ## Próximos, por prioridade
 
-| # | Tópico | Serviço | Trilho | Janela |
-|---|--------|---------|--------|--------|
-| 1 | Crise de turnover de 1 de setembro | `moveinout` `touchup` | A | urgente, expira em 5 de setembro |
-| 2 | Transparência de taxa do Airbnb | `rental` | A | antes da atualização de outubro |
-| 3 | Deep clean de outono, enquadramento de bem-estar | `deep` | A | setembro a outubro |
-| 4 | Retorno presencial e contrato de limpeza comercial | `commercial` | A | setembro |
-| 5 | Desinfecção de creche na volta às aulas | `commercial` `deep` | A | expira em setembro |
-| 6 | Pacote de manutenção de outono do handyman | `handyman` | A | setembro a outubro |
+| # | Slug | Serviço | Trilho | Janela |
+|---|------|---------|--------|--------|
+| 1 | `sept-1-turnover-crunch` | `moveinout` `touchup` | A | urgente, expira 05/09 |
+| 2 | `hurricane-power-washing` | `powerwash` | B | temporada até novembro, prioridade estrutural na FL |
+| 3 | `airbnb-fee-transparency` | `rental` | A | antes da atualização de outubro |
+| 4 | `fall-reset-deep-clean` | `deep` | A | setembro a outubro |
+| 5 | `rto-commercial-contracts` | `commercial` | A | setembro |
+| 6 | `daycare-back-to-school` | `commercial` `deep` | A | expira em setembro |
 
 ## Trilho B, precisa de filmagem
 
-| Tópico | Serviço | O que gravar |
-|--------|---------|--------------|
-| Teste dos gadgets virais do TikTok | `standard` `deep` `windows` | Pink Stuff, drill brush, Sprayway, vaporizadora, com nota da equipe |
-| Mancha de água dura no box | `deep` `windows` | tomada única, cronômetro na tela |
-| Arrumar antes da faxineira chegar | `standard` `touchup` | equipe falando em câmera |
-| Lavagem de fachada pós-tempestade | `powerwash` | tomada satisfatória contínua |
+| Slug | Serviço | O que gravar |
+|------|---------|--------------|
+| `hurricane-power-washing` | `powerwash` | soft wash contínuo, sem corte, áudio de água captado |
+| `tiktok-gadget-test` | `standard` `deep` `windows` | Pink Stuff, drill brush, Sprayway, vaporizadora, com nota da equipe |
+| `hard-water-glass` | `deep` `windows` | tomada única, cronômetro na tela |
+| `pre-clean-debate` | `standard` `touchup` | equipe falando em câmera |
+| `airbnb-guest-checklist-backlash` | `rental` | reação ao documento, tom leve |
+
+## Ajuste de prioridade da Flórida
+
+`sept-1-turnover-crunch` nasceu de dado do Nordeste, onde 1 de setembro concentra a
+virada de contratos. Na Flórida a rotatividade é distribuída pelo ano, então a peça
+precisa ser reescrita em torno do calendário local antes de entrar em produção, ou o
+gancho não fecha. Verificar isso no STATE 4.
 
 ## Regra da fila
 
