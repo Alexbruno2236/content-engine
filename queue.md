@@ -8,6 +8,7 @@ clima frio.
 | Data | Slug | Serviço | Trilho | Status |
 |------|------|---------|--------|--------|
 | 2026-08-27 | `fl-deposit-deadline-2026` | `moveinout` | A | roteiro e 27 prompts prontos, imagens pendentes |
+| 2026-08-27 | `snowbird-return-exterior-reset` | `powerwash` `deep` | B | roteiro e shotlist prontos, **gravar em setembro** |
 
 ## Referência, não publicar
 
@@ -21,6 +22,7 @@ clima frio.
 |---|------|---------|--------|--------|
 | 1 | `sept-1-turnover-crunch` | `moveinout` `touchup` | A | urgente, expira 05/09 |
 | 2 | `hurricane-power-washing` | `powerwash` | B | temporada até novembro, prioridade estrutural na FL |
+| — | `condo-milestone-inspection-2026` | `commercial` | A | **não produzir na forma atual.** Ver regra 8 do DNA: é lei de segurança estrutural. Só o recorte de preparo de superfície antes da vistoria é aceitável. |
 | 3 | `airbnb-fee-transparency` | `rental` | A | antes da atualização de outubro |
 | 4 | `fall-reset-deep-clean` | `deep` | A | setembro a outubro |
 | 5 | `rto-commercial-contracts` | `commercial` | A | setembro |
@@ -30,6 +32,7 @@ clima frio.
 
 | Slug | Serviço | O que gravar |
 |------|---------|--------------|
+| `snowbird-return-exterior-reset` | `powerwash` `deep` | **shotlist pronta.** 5 setups, ~3 min de bruto. Setup A e C dividem o quadro, marcar o tripé. |
 | `hurricane-power-washing` | `powerwash` | soft wash contínuo, sem corte, áudio de água captado |
 | `tiktok-gadget-test` | `standard` `deep` `windows` | Pink Stuff, drill brush, Sprayway, vaporizadora, com nota da equipe |
 | `hard-water-glass` | `deep` `windows` | tomada única, cronômetro na tela |
