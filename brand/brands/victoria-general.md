@@ -3,30 +3,66 @@
 Paleta em `victoria-general.palette`, que é o arquivo que o motor lê. Este aqui
 documenta as decisões.
 
-## Cores oficiais, fornecidas pela marca
+## Cores
 
-| Cor | Hex | Papel atribuído |
-|-----|-----|-----------------|
-| Azul claro | `#60DBFD` | `PRIMARY`, acento principal e elemento herói |
-| Rosa claro | `#FEADFF` | `SECONDARY`, destaque suave |
-| Magenta | `#FF30C8` | `SIGNAL`, custo, risco e prazo |
-| Branco | `#FFFFFF` | `BASE`, fundo |
+| Cor | Hex | Papel | Origem |
+|-----|-----|-------|--------|
+| Azul-marinho profundo | `#001139` | `INK` | observada em uso no carrossel, é a cor do texto principal |
+| Azul vívido | `#0098F4` | `PRIMARY` | observada em uso, é a ênfase secundária |
+| Magenta | `#FF30C8` | `SIGNAL` | paleta oficial |
+| Rosa claro | `#FEADFF` | `SECONDARY` | paleta oficial |
+| Branco | `#FFFFFF` | `BASE` | paleta oficial |
+| Azul-gelo | `#60DBFD` | reserva | paleta oficial, muito próximo do `#0098F4`. Usar só quando os dois azuis aparecerem juntos e precisarem se distinguir. |
 
-Esta paleta cobre quatro dos seis papéis sozinha, e o magenta `#FF30C8` é um sinal de
-alerta excelente: saturado, quente e impossível de ignorar em miniatura. Melhor
-encaixe que a da Sharon Maid.
+**Derivado, único:** `NEUTRAL` = `#A6ACBA`, que é o próprio `#001139` clareado sobre
+branco a 35 por cento. Não é cor nova, é a cor da marca em tom baixo.
 
-## Tokens derivados, precisam da sua aprovação
+Uma versão anterior deste arquivo propunha `#1B1140` como `INK`. Foi descartada: o
+`#001139` real da marca faz o mesmo trabalho e é o que já está publicado.
 
-| Token | Hex proposto | De onde veio |
-|-------|--------------|--------------|
-| `INK` | `#1B1140` | quase-preto violeta profundo, derivado do eixo magenta-azul da marca. Um preto neutro brigaria com o magenta; este assenta embaixo dele. |
-| `NEUTRAL` | `#A9B4C2` | cinza frio puxando para o azul, para não competir com o rosa nem esfriar demais. |
+## Sistema tipográfico observado
 
-## Caráter visual
+O carrossel revela uma gramática consistente que vale replicar nas thumbnails:
 
-Magenta com azul elétrico lê como energia e contemporaneidade. Aguenta conteúdo mais
-assertivo, com número grande e afirmação direta, melhor que a Sharon Maid.
+1. **Título em sans bold, `INK`.** Peso alto, caixa mista, várias linhas curtas.
+2. **Uma palavra por linha em `SIGNAL`.** A palavra que carrega o gancho, nunca duas
+   por linha. No exemplo: "Cat" e "Odor".
+3. **Uma expressão em `PRIMARY`.** O contraponto, geralmente o que o espectador
+   acredita erroneamente. No exemplo: "stain disappear" e "clean".
+4. **Traço de destaque em `SIGNAL`**, feito à mão, sublinhando a expressão em `PRIMARY`.
+5. **Subtexto em serifa itálica**, menor, com a mesma regra de palavra colorida.
+6. **Seta desenhada em `PRIMARY`** apontando para o objeto da foto.
+
+A hierarquia é sempre a mesma: o `INK` carrega a frase, o `SIGNAL` marca o problema, o
+`PRIMARY` marca a crença equivocada. É um sistema bom e coerente.
+
+## Diferença de formato que precisa ficar registrada
+
+O carrossel usa **fotografia real** com tipografia por cima. O motor produz **motion
+design vetorial**. São linguagens diferentes.
+
+Isso não é um conflito, e sim uma divisão de formato: carrossel estático fica com foto,
+vídeo narrado fica com vetor. Mas as duas precisam parecer da mesma casa, e o que
+costura é a tipografia e o uso de cor acima, não o tipo de imagem. Por isso o sistema
+foi documentado aqui.
+
+Se você preferir que o vídeo também use fotografia, é outro estilo, e o motor suporta:
+cria `brand/styles/photo-type.style` e passa `--style photo-type`. As cenas não mudam,
+só o bloco de estilo.
+
+## Tom de voz
+
+O carrossel abre com "Cat accident? Don't just make the stain disappear." É uma pergunta
+retórica, que o `narration-dna.md` proíbe na abertura de vídeo narrado.
+
+Não é contradição. São dois contextos: no carrossel a imagem já ganhou a atenção e o
+texto pode se dar ao luxo de perguntar. No vídeo, os primeiros três segundos disputam
+com o polegar, e pergunta retórica é o sinal mais reconhecível de anúncio. A regra
+continua valendo para narração.
+
+O que o carrossel acerta e vale carregar para o vídeo: ele avisa de um problema que o
+espectador não sabe que tem (cheiro persiste mesmo com a mancha invisível) e entrega a
+informação antes de qualquer oferta. Isso é exatamente Documentary Utility.
 
 ## Campos a preencher
 

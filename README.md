@@ -93,8 +93,8 @@ descrita no fim de `brand/brands/victoria-general.md`.
 ## Antes da primeira publicação
 
 Preencher os `TODO`: cidade e raio de atendimento e legenda padrão, em cada arquivo de
-`brand/brands/`. E aprovar os tokens derivados (`INK` e `SIGNAL` da Sharon Maid, `INK` e
-`NEUTRAL` da Victoria), que eu propus porque as paletas entregues não os tinham.
+`brand/brands/`. Os tokens derivados da Sharon Maid (`INK` e `SIGNAL`) estão aprovados como
+solução provisória. A Victoria usa cores reais observadas no material publicado.
 
 ## Roadmap
 
