@@ -1,0 +1,5 @@
+output/**/*.mp3
+output/**/*.mp4
+output/**/images/
+.DS_Store
+__pycache__/

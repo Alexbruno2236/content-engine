@@ -1,0 +1,13 @@
+Transform the provided image into a 6-second premium editorial motion design animation. Preserve the final composition of the provided image exactly. Do not redesign, reposition, resize, recolor, or replace any element. The provided image is the FINISHED frame that the animation builds toward.
+
+Style: precise vector motion design in motion. Flat geometric shapes with consistent stroke weights, clean fills, soft long shadows, faint paper grain. Every element animates as a rigid vector object with crisp edges. Snappy confident easing, custom ease-out curves, slight overshoot and settle on arrival, staggered timing between elements of roughly 3 to 5 frames. Never sluggish, never bouncy-cartoon, never smooth-CGI-organic.
+
+CAMERA, STRICT: the camera stays completely locked for the entire clip. No zoom, no pan, no tilt, no rotation, no orbit, no dolly, no tracking, no handheld shake, no focus pulls, no reframing, no cuts, no transitions, no morphing, no object replacement, no time skips. One continuous static shot.
+
+0 TO 4 SECONDS, STAGGERED BUILD: the frame opens on the EMPTY background plate only: the bare base color with its grain and vignette and any fixed scaffolding (a grid, a baseline, a frame edge), with every story element absent. Elements then enter one by one, back to front, in narrative order. Background shapes fade and scale up from ninety-six percent. The hero element slides in along a single axis and settles with a small overshoot. Supporting elements stagger in after it. Lines and connectors draw themselves along their own path. Shadows grow as their owners arrive. Any specified label types on or wipes in last, character group by character group. Each arrival lands cleanly and casts its correct shadow. No element moves again after it lands. By 4 seconds the frame exactly matches the provided image.
+
+4 TO 6 SECONDS, LIVING POSTER: everything holds position. Only micro-life remains: the signal accent pulses once at very low amplitude, a connector line shimmers faintly along its length, shadows breathe by a hair, grain drifts almost imperceptibly. Nothing changes location, nothing scales, nothing rotates, nothing enters or exits.
+
+AUDIO: no music, no narration, no voices. Only minimal UI-adjacent motion design sound: soft whoosh on entrance, a light click on settle, a faint tick on the label. All subtle, all low in the mix.
+
+FINAL RULE: the finished clip must feel like a broadcast-grade editorial graphic assembling itself with intent, then holding as a still poster, matching the provided image exactly from 4 seconds to the end.
