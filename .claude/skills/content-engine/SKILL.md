@@ -25,11 +25,33 @@ peça de vídeo narrada completa e pronta para produção.
 
 ## Argumentos
 
+- `<slug>` primeiro argumento posicional. Pula o STATE 1 e entra direto no tópico.
+  Sempre um slug do índice de `trends/`, nunca texto livre. Ex: `co-deposit-rule-2026`.
 - `--style <nome>` estilo visual, padrão `motion-design`. Ver `brand/styles/`.
 - `--ratio <proporção>` padrão `9:16`.
 - `--auto` executa STATE 1 a 9 sem parar, escolhendo a tendência de maior prioridade
   e duração de 60 s. Só para execução agendada, onde não há ninguém para responder.
-- `--topic "<texto>"` pula o STATE 1 e entra direto no tópico informado.
+
+## Resolução de tópico
+
+O tópico **nunca** é texto livre. Um tema descrito em palavras soltas ("limpeza de
+mudança") é ambíguo: serve a três serviços, dois trilhos e nenhuma fonte. O motor
+resolve sempre por slug estável do índice de `trends/`.
+
+O slug resolve para um registro completo com título, serviço, trilho, evidência, gancho
+local exigido, janela de validade e fontes. É esse registro que vira o contexto, não a
+frase digitada.
+
+Regras:
+
+1. Slug informado e encontrado: carregue o registro e vá para o STATE 2.
+2. Slug informado e não encontrado: liste os slugs parecidos e pare. Nunca adivinhe.
+3. Slug ausente: siga para o STATE 1 e apresente o índice.
+4. O usuário descreve um tema novo, fora do índice: **antes de produzir**, pesquise e
+   escreva o registro em `trends/<data>.md` com slug, serviço, trilho e fontes. Sem
+   registro não há produção. Um tópico sem fonte verificada e sem trilho definido é
+   exatamente o que o motor existe para impedir.
+5. Registro com janela expirada: avise e confirme antes de seguir.
 
 ---
 
@@ -54,15 +76,18 @@ Siga direto para o STATE 1. Não pare aqui.
 
 ## STATE 1, TÓPICO
 
-Apresente as tendências do arquivo de `trends/` ainda não produzidas, como lista
-numerada. Uma linha cada, no formato:
+Apresente o índice do arquivo de `trends/` mais recente, sem os já produzidos, ordenado
+por prioridade. Uma linha cada:
 
-`N. <nome da tendência> — <categoria de serviço> — <trilho A ou B> — <por que agora>`
+`N. <slug> · <título> · <serviço> · <trilho> · <janela>`
 
-Marque com `[B]` as que pedem filmagem e não motion design, para o usuário não gastar
-geração de imagem no lugar errado.
+Marque com `[B]` as que pedem filmagem e não motion design, para não gastar geração de
+imagem no lugar errado. Marque com `[EXPIRA <data>]` as de janela curta.
 
-Termine exatamente com: "Escolha um número, ou descreva outro tópico."
+O número é atalho de digitação. O slug é a identidade. Ao receber um número, ecoe o
+slug correspondente antes de seguir, para que a escolha fique registrada sem ambiguidade.
+
+Termine exatamente com: "Escolha um número ou um slug, ou descreva um tópico novo."
 
 **PARE. ESPERE.**
 

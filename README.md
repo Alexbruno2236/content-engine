@@ -13,12 +13,23 @@ espectador nunca contrate o serviço.
 ## Uso
 
 ```bash
-/content-engine                        # interativo, motion design, 9:16, padrão
-/content-engine --style real-footage   # trilho de filmagem, gera shotlist
-/content-engine --ratio 16:9           # YouTube longo
-/content-engine --topic "..."          # pula a seleção de tendência
-/content-engine --auto                 # sem paradas, para execução agendada
+/content-engine                          # interativo, mostra o índice de tendências
+/content-engine co-deposit-rule-2026     # entra direto num tópico, por slug
+/content-engine <slug> --style real-footage
+/content-engine <slug> --ratio 16:9      # YouTube longo
+/content-engine --auto                   # sem paradas, para execução agendada
 ```
+
+O tópico é sempre um **slug** do índice de `trends/`, nunca texto livre. O slug resolve
+para um registro com serviço, trilho, evidência, gancho local e fontes. O contexto mora
+no arquivo committado, não na frase digitada, que é o que impede um tema ambíguo de
+virar peça errada.
+
+## Ligar a rotina de pesquisa
+
+A rotina diária precisa ter este repositório em **Select repositories**, senão ela não
+enxerga as skills nem consegue commitar. Passo a passo em
+[`docs/routine-setup.md`](docs/routine-setup.md).
 
 ## Máquina de estados
 
