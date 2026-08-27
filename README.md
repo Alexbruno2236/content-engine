@@ -27,8 +27,9 @@ virar peça errada.
 
 ## Ligar a rotina de pesquisa
 
-A rotina diária precisa ter este repositório em **Select repositories**, senão ela não
-enxerga as skills nem consegue commitar. Passo a passo em
+A rotina diária precisa de acesso a este repositório, senão não enxerga as skills nem
+consegue commitar. O seletor da web tem bug conhecido com repositório de conta pessoal;
+os contornos, incluindo rodar a rotina localmente no Desktop, estão em
 [`docs/routine-setup.md`](docs/routine-setup.md).
 
 ## Máquina de estados

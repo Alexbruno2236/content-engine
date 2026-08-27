@@ -18,19 +18,68 @@ campo separado do formulário.
 
 ---
 
-## Passo 1, vincular o repositório
+## Passo 1, dar acesso ao repositório
 
-1. Abrir https://claude.ai/code/routines
-2. Clicar na rotina **Daily cleaning content trends**
-3. Clicar no ícone de lápis para abrir **Edit routine**
-4. Em **Select repositories**, adicionar `Alexbruno2236/content-engine`
-5. Salvar
+### O caminho oficial, que hoje está quebrado
 
-A partir da próxima execução a rotina clona o repositório, enxerga
-`.claude/skills/content-engine/`, lê `brand/` e `trends/`, e consegue commitar.
+Editar a rotina em https://claude.ai/code/routines e adicionar o repositório em
+**Select repository**, o controle logo abaixo da caixa de Instructions.
 
-Se a rotina também for produzir peças do Meu Shop Favorito, adicionar
-`Alexbruno2236/meushopfavorito-remotion` na mesma lista. O campo aceita múltiplos.
+**Isso pode não funcionar.** Existe bug conhecido em que repositórios de conta pessoal
+não aparecem no seletor, mesmo com o Claude GitHub App instalado com acesso a todos os
+repositórios. Repositório de organização aparece; pessoal não.
+
+- [#18467](https://github.com/anthropics/claude-code/issues/18467), **aberta**, sem
+  resposta da Anthropic
+- [#12839](https://github.com/anthropics/claude-code/issues/12839), fechada como
+  duplicata. O autor já tentou reinstalar o App e limpar cookies, sem sucesso.
+- [#27155](https://github.com/anthropics/claude-code/issues/27155), fechada como
+  duplicata das duas acima
+
+É indexação no backend. Reinstalar o App não resolve.
+
+### Contorno 1, `/web-setup`
+
+Caminho de autenticação **diferente** do GitHub App: sincroniza o token do `gh` CLI
+local com a conta Claude. Nenhuma das três issues registra ter testado.
+
+```bash
+gh auth status          # precisa estar autenticado
+claude                  # no terminal local
+/web-setup
+```
+
+Depois reabrir o formulário da rotina e checar o seletor.
+
+### Contorno 2, `/schedule` pelo CLI
+
+Outro caminho de código, que não passa pelo seletor da web.
+
+```bash
+cd /f/content-engine
+claude
+/schedule update
+```
+
+Descrever em linguagem natural que a rotina deve usar este repositório.
+
+### Contorno 3, rotina local no Desktop
+
+Contorna o problema inteiro, e para este projeto provavelmente é a arquitetura melhor.
+
+| | Nuvem | Local (Desktop) |
+|---|---|---|
+| Acesso a arquivos locais | não, clone novo | **sim** |
+| Precisa da máquina ligada | não | sim |
+| Skills do repositório | só do clone | do diretório de trabalho |
+| Intervalo mínimo | 1 hora | 1 minuto |
+
+No app Desktop, aba **Code** → **Routines** → **New routine** → **Local**. Pasta de
+trabalho: `F:\content-engine`. Instruções: o prompt do Passo 2.
+
+Rodando local, a rotina escreve direto em `trends/`, enxerga `/content-engine` e commita
+com as suas credenciais. O problema do container efêmero deixa de existir, porque não há
+container. O preço é que a máquina precisa estar ligada com o app aberto.
 
 ## Passo 2, trocar as instruções da rotina
 
@@ -58,7 +107,8 @@ Cada tópico precisa de:
 Se um tópico já existe num arquivo de trends anterior, reutilize o mesmo slug em vez de
 criar outro. Consulte queue.md e não repita o que já foi produzido.
 
-Commite em uma branch claude/trends-<AAAA-MM-DD> e abra PR.
+Commite em uma branch trends/<AAAA-MM-DD> e abra PR. Se estiver rodando localmente,
+pode commitar direto na main.
 
 Notifique apenas se houver tendência nova de janela curta, algo que expire em menos de
 duas semanas, ou se a pesquisa falhar. Dia sem novidade não gera notificação.
@@ -66,8 +116,8 @@ duas semanas, ou se a pesquisa falhar. Dia sem novidade não gera notificação.
 
 ## Passo 3, verificar
 
-Na página da rotina, clicar em **Run now**. A execução deve terminar com um PR abrindo
-`trends/<data>.md`. Se o arquivo não aparecer, o repositório não foi vinculado.
+Clicar em **Run now**. A execução deve terminar com `trends/<data>.md` escrito. Se o
+arquivo não aparecer, o repositório não foi vinculado e nenhum dos contornos pegou.
 
 Atenção ao aviso da documentação: status verde significa que a sessão iniciou e terminou
 sem erro de infraestrutura, não que a tarefa deu certo. Abrir a execução e conferir.
