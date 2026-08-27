@@ -100,8 +100,13 @@ Nunca afirme número, data ou nome de lei sem fonte verificada. Dado incerto sai
 
 Crie a branch trends/<AAAA-MM-DD> e abra PR contra main, pelo conector.
 
-Notifique apenas se houver tendência nova com janela expirando em menos de duas semanas,
-ou se a pesquisa ou a escrita falharem. Dia sem novidade não gera notificação.
+Notifique se houver tendência nova cuja janela EXPIRE ou COMECE em menos de duas
+semanas, ou se a pesquisa ou a escrita falharem. Dia sem novidade não gera notificação.
+
+Recuse tópico fora da competência da empresa, mesmo com prazo real e gancho bom. Só
+produzimos sobre o que a equipe executa. Se o tópico trata do trabalho de outro
+profissional, engenheiro, corretor, contador, registre no arquivo com o recorte estreito
+do preparo que antecede o trabalho dele, e deixe isso explícito na evidência.
 
 Se o conector não conseguir escrever no repositório, não invente e não tente contornar:
 devolva o conteúdo completo do arquivo na notificação e diga que a escrita falhou.
@@ -113,6 +118,11 @@ devolva o conteúdo completo do arquivo na notificação e diga que a escrita fa
 
 Atenção ao aviso da documentação: status verde significa que a sessão iniciou e terminou
 sem erro de infraestrutura, não que a tarefa deu certo. Abrir a execução e ler.
+
+> **Por que "comece" entra na regra.** A primeira execução trouxe
+> `snowbird-return-exterior-reset`, com preparo em setembro, e não notificou, porque a
+> janela não estava expirando. Estava abrindo em quatro dias. A regra cobria só um dos
+> dois lados.
 
 ### O que mudou em relação ao prompt antigo
 

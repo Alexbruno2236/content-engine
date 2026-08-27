@@ -87,8 +87,23 @@ reais e o que a vistoria realmente checa. A prestação de serviço é a consequ
    Nada de rosto, endereço, correspondência, documento ou item pessoal identificável.
 6. **Sem promessa de resultado garantido.** Nem de devolução de caução, nem de
    aprovação em vistoria, nem de remoção total de mancha.
-7. **Sem travessão (em dash) em nenhuma saída.** Vírgula, dois-pontos, parênteses
-   ou hífen simples. Travessão quebra a cadência do TTS.
+7. **Sem travessão (em dash) em narração e em texto publicado.** Vírgula, dois-pontos,
+   parênteses ou hífen simples. A regra existe pela cadência do TTS e vale para roteiro,
+   legenda, rótulo em tela e prompt. Documentação interna deste repositório não conta.
+8. **Não saia da sua competência.** Só produzimos sobre o que a empresa efetivamente faz.
+   Lei de locação e prazo de caução: sim, porque a limpeza de saída está dentro. Lei de
+   segurança estrutural, laudo de engenharia, seguro, tributo: não, mesmo quando o prazo
+   é real e o gancho é bom.
+
+   O teste: a peça descreve algo que a nossa equipe executa, ou algo que outro
+   profissional executa? Se for o segundo, o único recorte aceitável é o preparo que
+   antecede o trabalho dele, e a peça precisa deixar isso explícito.
+
+   Exemplo real, agosto de 2026: a pesquisa trouxe a vistoria de marco da Fla. Stat.
+   553.899, com prazo em 31 de dezembro. O prazo existe e é relevante, mas a lei é de
+   segurança estrutural. O recorte aceitável é estreito: antes da vistoria, o inspetor
+   precisa enxergar a superfície, e concreto coberto de mofo atrapalha. Isso é lavagem de
+   fachada, que é nosso. Explicar a lei em si não é.
 
 ## 6. Papéis de cor
 
