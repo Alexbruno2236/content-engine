@@ -124,24 +124,70 @@ sem erro de infraestrutura, não que a tarefa deu certo. Abrir a execução e co
 
 ---
 
-## Fluxo depois de ligado
+## Fluxo, na arquitetura local
 
 ```
-rotina das 9h  →  clona content-engine
-               →  pesquisa
-               →  escreve trends/<data>.md com slugs estáveis
-               →  commita e abre PR
-                        ↓
-você revisa e faz merge
-                        ↓
-sessão sua  →  /content-engine <slug>
-            →  máquina de estados com aprovação por etapa
-            →  output/<slug>/
+Desktop, 9h, roda em F:\content-engine
+   ├─ pesquisa (WebSearch)
+   ├─ escreve trends/<data>.md com slugs estáveis
+   ├─ commita
+   └─ notifica só se houver janela curta ou falha
+                    ↓
+você abre o Claude Code na mesma pasta
+   └─ /content-engine <slug> --brand <marca>
+        └─ máquina de estados, aprovação por etapa
+             └─ output/<slug>/
+                    ↓
+git push  →  GitHub
 ```
 
-O slug é a costura. A rotina o cria com registro completo e fontes, você o digita, o
-motor o resolve de volta para o registro. Ninguém precisa descrever o tópico em texto
-livre em momento nenhum, que é onde o contexto se perderia.
+O slug continua sendo a costura: a rotina cria com registro completo e fontes, você
+digita, o motor resolve de volta. Ninguém descreve tópico em texto livre.
+
+### O que muda no papel do GitHub
+
+Ele deixa de ser **transporte** e passa a ser **histórico e backup**.
+
+Antes, o repositório era a única forma de a pesquisa sobreviver ao container que morria.
+Agora os arquivos já nascem e permanecem em disco. O `push` continua importante, mas por
+outros motivos: manter versionamento do que mudou e por quê, sobreviver à perda da
+máquina, e deixar o projeto pronto caso o bug do seletor seja corrigido e a rotina volte
+para a nuvem.
+
+## Vantagens da arquitetura local
+
+| | Ganho |
+|---|---|
+| Container efêmero | deixa de existir. Não há o que sobreviver. |
+| Acesso a arquivo | direto, sem clone, sem PR intermediário |
+| Skills | `/content-engine` disponível por estar no diretório |
+| Ferramentas | `beats.py` e `build_prompts.py` rodam sobre os arquivos reais |
+| Intervalo mínimo | 1 minuto contra 1 hora |
+| Transferência | acaba o vaivém de zip e patch |
+
+## Limitações, e elas são reais
+
+1. **A máquina precisa estar ligada com o app aberto.** Se dormir no horário, a execução
+   é pulada. O Desktop faz **uma** execução de recuperação ao acordar, para o horário
+   perdido mais recente dos últimos 7 dias, e descarta o resto. Uma semana de viagem
+   gera uma pesquisa só, não sete.
+2. **Cuidado com o horário da recuperação.** Uma tarefa das 9h pode disparar às 23h se o
+   computador ficou dormindo. Se isso importar, o prompt precisa se defender: "se já
+   passou das 18h, apenas registre o que foi perdido".
+3. **Notificação fica no desktop.** Não chega no celular como chegava na rotina de nuvem.
+4. **Só gatilho de horário.** Nada de disparo por API nem por evento do GitHub.
+5. **Dependência de uma máquina.** O repositório no GitHub é o que impede isso de virar
+   ponto único de falha do projeto, mas a rotina em si morre com o PC.
+6. **Prompt de permissão trava a execução.** Depois de criar a tarefa, clicar em
+   **Run now**, acompanhar e marcar "always allow" em cada ferramenta. Sem isso a
+   execução fica parada esperando aprovação que ninguém vai dar às 9h.
+
+## Requisito que não é opcional
+
+Login pela conta claude.ai, não por chave de API. Se o rodapé do CLI mostrar
+**API Usage Billing** e `Not logged in`, rodar `/login`. Chave de API em
+`ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN` ou `apiKeyHelper` no `settings.json` tem
+precedência sobre a conta e precisa sair primeiro.
 
 ## Por que não deixar a rotina produzir sozinha
 
