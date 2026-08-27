@@ -27,9 +27,9 @@ virar peça errada.
 
 ## Ligar a rotina de pesquisa
 
-A rotina diária precisa de acesso a este repositório, senão não enxerga as skills nem
-consegue commitar. O seletor da web tem bug conhecido com repositório de conta pessoal;
-os contornos, incluindo rodar a rotina localmente no Desktop, estão em
+A pesquisa roda na nuvem e escreve em `trends/` pelo conector GitHub MCP, porque o
+seletor de repositório tem bug conhecido com conta pessoal. A produção roda local, onde
+a skill e os arquivos estão. Configuração em
 [`docs/routine-setup.md`](docs/routine-setup.md).
 
 ## Máquina de estados

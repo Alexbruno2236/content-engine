@@ -1,197 +1,168 @@
 # Ligar a rotina de pesquisa ao motor
 
-Hoje a rotina diária roda sem repositório. Ela pesquisa, escreve o resultado num
-container efêmero e o container morre. Nada chega ao motor.
+A rotina diária pesquisa bem, mas o resultado morre com o container. Este documento
+resolve isso.
 
-A documentação é explícita sobre a causa:
-
-> "Routines run autonomously as full Claude Code cloud sessions... The session can run
-> shell commands, use **skills committed to the cloned repository**, and call any
-> connectors you include."
-
-Skill de projeto vem do repositório clonado. Sem repositório, não há skill. É por isso
-que `/trends` e `/daily` aparecem nos chats abertos sobre o `meushopfavorito-remotion` e
-não aparecem na sessão da rotina.
-
-Não é o environment. Environment controla rede, variáveis e setup script. Repositório é
-campo separado do formulário.
+O diagnóstico original: skill de projeto só carrega do repositório clonado, e a rotina
+não tinha repositório. Mas para a **pesquisa** isso é secundário. Ela não precisa do
+motor, precisa escrever um arquivo. Quem precisa do motor é a produção, e essa roda
+local de qualquer forma.
 
 ---
 
-## Passo 1, dar acesso ao repositório
+## O bug do seletor
 
-### O caminho oficial, que hoje está quebrado
-
-Editar a rotina em https://claude.ai/code/routines e adicionar o repositório em
-**Select repository**, o controle logo abaixo da caixa de Instructions.
-
-**Isso pode não funcionar.** Existe bug conhecido em que repositórios de conta pessoal
-não aparecem no seletor, mesmo com o Claude GitHub App instalado com acesso a todos os
-repositórios. Repositório de organização aparece; pessoal não.
+Repositório de conta pessoal não aparece em **Select a repository**, mesmo com o Claude
+GitHub App em "All repositories". Confirmado nesta conta depois de `/login` e
+`/web-setup`: o seletor continua listando só dois repositórios antigos.
 
 - [#18467](https://github.com/anthropics/claude-code/issues/18467), **aberta**, sem
   resposta da Anthropic
-- [#12839](https://github.com/anthropics/claude-code/issues/12839), fechada como
-  duplicata. O autor já tentou reinstalar o App e limpar cookies, sem sucesso.
-- [#27155](https://github.com/anthropics/claude-code/issues/27155), fechada como
-  duplicata das duas acima
+- [#12839](https://github.com/anthropics/claude-code/issues/12839) e
+  [#27155](https://github.com/anthropics/claude-code/issues/27155), fechadas como
+  duplicatas
 
-É indexação no backend. Reinstalar o App não resolve.
+É indexação no backend. Reinstalar o App não resolve, já foi tentado por outros.
 
-### Contorno 1, `/web-setup`
+---
 
-Caminho de autenticação **diferente** do GitHub App: sincroniza o token do `gh` CLI
-local com a conta Claude. Nenhuma das três issues registra ter testado.
+## A arquitetura escolhida
 
-```bash
-gh auth status          # precisa estar autenticado
-claude                  # no terminal local
-/web-setup
+```
+NUVEM, 9h                              LOCAL, quando você quiser
+┌──────────────────────────┐          ┌──────────────────────────────┐
+│ rotina de pesquisa       │          │ F:\content-engine            │
+│  ├ WebSearch             │          │  /content-engine <slug>      │
+│  ├ lê o repo via MCP     │          │   ├ máquina de estados       │
+│  ├ escreve trends/<data> │  ──PR──▶ │   ├ aprovação por etapa      │
+│  ├ abre PR               │          │   └ output/<slug>/           │
+│  └ notifica o celular    │          │  git push                    │
+└──────────────────────────┘          └──────────────────────────────┘
+   roda com o PC desligado               precisa de você presente
 ```
 
-Depois reabrir o formulário da rotina e checar o seletor.
+A divisão não é contorno, é a natureza de cada etapa. Pesquisa é desatendida e se
+beneficia de rodar sem a máquina. Produção afirma lei e valor em dólar, e decide gasto
+de geração de imagem, então precisa de revisão humana etapa por etapa.
 
-### Contorno 2, `/schedule` pelo CLI
+O slug é a costura entre as duas. A rotina cria com registro completo e fontes, você
+digita, o motor resolve de volta.
 
-Outro caminho de código, que não passa pelo seletor da web.
+---
 
-```bash
-cd /f/content-engine
-claude
-/schedule update
-```
+## Configurar a rotina de nuvem
 
-Descrever em linguagem natural que a rotina deve usar este repositório.
+Não precisa criar task nova. Editar a existente em https://claude.ai/code/routines.
 
-### Contorno 3, rotina local no Desktop
+### 1. Conector
 
-Contorna o problema inteiro, e para este projeto provavelmente é a arquitetura melhor.
+Em **Connectors**, garantir que **GitHub MCP** está na lista. Autenticar antes com
+`/mcp` no CLI local, se ainda não estiver conectado.
 
-| | Nuvem | Local (Desktop) |
-|---|---|---|
-| Acesso a arquivos locais | não, clone novo | **sim** |
-| Precisa da máquina ligada | não | sim |
-| Skills do repositório | só do clone | do diretório de trabalho |
-| Intervalo mínimo | 1 hora | 1 minuto |
+Remover os conectores que a rotina não usa. A documentação é direta sobre isso: Claude
+pode usar qualquer ferramenta de um conector incluído, incluindo escrita, sem pedir
+permissão durante a execução.
 
-No app Desktop, aba **Code** → **Routines** → **New routine** → **Local**. Pasta de
-trabalho: `F:\content-engine`. Instruções: o prompt do Passo 2.
+### 2. Instruções
 
-Rodando local, a rotina escreve direto em `trends/`, enxerga `/content-engine` e commita
-com as suas credenciais. O problema do container efêmero deixa de existir, porque não há
-container. O preço é que a máquina precisa estar ligada com o app aberto.
-
-## Passo 2, trocar as instruções da rotina
-
-O prompt atual pesquisa e devolve texto. Substituir pelo abaixo, que pesquisa, grava no
-formato do índice e commita. Colar em **Instructions**.
+Substituir o conteúdo de **Instructions** por:
 
 ```
 Pesquise tendências de busca, comportamento e conteúdo nos Estados Unidos ligadas a
 serviços de limpeza profissional e manutenção predial, cobrindo Google Trends, Reddit,
-TikTok, Instagram, YouTube e sazonalidade da semana corrente.
+TikTok, Instagram, YouTube e a sazonalidade da semana corrente. O mercado atendido é a
+Flórida.
 
-Escreva o resultado em trends/<AAAA-MM-DD>.md do repositório content-engine, seguindo
-exatamente o formato de trends/2026-08-27.md: um índice em tabela no topo e um registro
-por tópico abaixo.
+O repositório de destino é Alexbruno2236/content-engine. Você NÃO tem clone local dele.
+Use o conector GitHub MCP para ler e escrever.
+
+Antes de pesquisar, leia por MCP:
+- o arquivo mais recente de trends/, para reaproveitar os slugs que já existem
+- queue.md, para não repetir o que já foi produzido
+- brand/DNA.md, para os IDs canônicos de serviço e o contexto de mercado
+
+Escreva o resultado em trends/<AAAA-MM-DD>.md seguindo exatamente o formato de
+trends/2026-08-27.md: um índice em tabela no topo e um registro por tópico abaixo.
 
 Cada tópico precisa de:
-- slug estável em kebab-case, único e reutilizável entre dias
-- serviço, usando os IDs canônicos de brand/DNA.md
-- trilho A (motion design) ou B (filmagem real). Sujeira real é sempre B.
+- slug estável em kebab-case, reutilizável entre dias
+- serviço, com os IDs canônicos de brand/DNA.md
+- trilho A (motion design) ou B (filmagem real). Se envolve sujeira real, é sempre B.
 - evidência concreta, com número, data ou citação
-- gancho local exigido
+- gancho local da Flórida
 - janela de validade
 - fontes com URL
 
-Se um tópico já existe num arquivo de trends anterior, reutilize o mesmo slug em vez de
-criar outro. Consulte queue.md e não repita o que já foi produzido.
+Reaproveite o slug quando o tópico já existir em arquivo anterior. Nunca crie slug novo
+para tópico já registrado, porque é o slug que liga a pesquisa à produção.
 
-Commite em uma branch trends/<AAAA-MM-DD> e abra PR. Se estiver rodando localmente,
-pode commitar direto na main.
+Nunca afirme número, data ou nome de lei sem fonte verificada. Dado incerto sai do texto.
 
-Notifique apenas se houver tendência nova de janela curta, algo que expire em menos de
-duas semanas, ou se a pesquisa falhar. Dia sem novidade não gera notificação.
+Crie a branch trends/<AAAA-MM-DD> e abra PR contra main, pelo conector.
+
+Notifique apenas se houver tendência nova com janela expirando em menos de duas semanas,
+ou se a pesquisa ou a escrita falharem. Dia sem novidade não gera notificação.
+
+Se o conector não conseguir escrever no repositório, não invente e não tente contornar:
+devolva o conteúdo completo do arquivo na notificação e diga que a escrita falhou.
 ```
 
-## Passo 3, verificar
+### 3. Verificar
 
-Clicar em **Run now**. A execução deve terminar com `trends/<data>.md` escrito. Se o
-arquivo não aparecer, o repositório não foi vinculado e nenhum dos contornos pegou.
+**Run now**, e conferir se o PR aparece no repositório.
 
 Atenção ao aviso da documentação: status verde significa que a sessão iniciou e terminou
-sem erro de infraestrutura, não que a tarefa deu certo. Abrir a execução e conferir.
+sem erro de infraestrutura, não que a tarefa deu certo. Abrir a execução e ler.
+
+### O que mudou em relação ao prompt antigo
+
+O anterior pedia pesquisa e devolvia texto no chat. Este lê o estado do projeto antes de
+pesquisar, escreve no formato do índice, reaproveita slug, exige fonte, abre PR e só
+notifica quando há algo acionável. E degrada com elegância se o conector falhar, em vez
+de fingir que escreveu.
 
 ---
 
-## Fluxo, na arquitetura local
+## Se o conector não conseguir escrever
 
-```
-Desktop, 9h, roda em F:\content-engine
-   ├─ pesquisa (WebSearch)
-   ├─ escreve trends/<data>.md com slugs estáveis
-   ├─ commita
-   └─ notifica só se houver janela curta ou falha
-                    ↓
-você abre o Claude Code na mesma pasta
-   └─ /content-engine <slug> --brand <marca>
-        └─ máquina de estados, aprovação por etapa
-             └─ output/<slug>/
-                    ↓
-git push  →  GitHub
-```
+Aí sim vale a rotina local, e nesse caso é task nova: não dá para converter uma de
+nuvem em local.
 
-O slug continua sendo a costura: a rotina cria com registro completo e fontes, você
-digita, o motor resolve de volta. Ninguém descreve tópico em texto livre.
+No app Desktop, aba **Code** → **Routines** → **New routine** → **Local**. Pasta de
+trabalho `F:\content-engine`, e o mesmo prompt acima sem a parte de MCP, já que
+localmente os arquivos estão em disco.
 
-### O que muda no papel do GitHub
+### Limitações que valem **só** para a versão local
 
-Ele deixa de ser **transporte** e passa a ser **histórico e backup**.
+1. A máquina precisa estar ligada com o app aberto. Se dormir no horário, a execução é
+   pulada. O Desktop faz **uma** recuperação ao acordar, para o horário perdido mais
+   recente dos últimos 7 dias, e descarta o resto. Uma semana de viagem gera uma
+   pesquisa, não sete.
+2. A recuperação pode disparar em horário estranho. Uma tarefa das 9h pode rodar às 23h.
+   Se isso importar, o prompt precisa se defender.
+3. Notificação fica no desktop, não chega no celular.
+4. Só gatilho de horário, sem API e sem evento do GitHub.
+5. A rotina morre com o PC. O repositório no GitHub é o que impede isso de virar ponto
+   único de falha do projeto.
+6. Prompt de permissão trava a execução. Depois de criar, clicar em **Run now**,
+   acompanhar e marcar "always allow" em cada ferramenta.
 
-Antes, o repositório era a única forma de a pesquisa sobreviver ao container que morria.
-Agora os arquivos já nascem e permanecem em disco. O `push` continua importante, mas por
-outros motivos: manter versionamento do que mudou e por quê, sobreviver à perda da
-máquina, e deixar o projeto pronto caso o bug do seletor seja corrigido e a rotina volte
-para a nuvem.
+Nenhuma delas vale para a rotina de nuvem, que roda com a máquina desligada e notifica
+o celular.
 
-## Vantagens da arquitetura local
+---
 
-| | Ganho |
-|---|---|
-| Container efêmero | deixa de existir. Não há o que sobreviver. |
-| Acesso a arquivo | direto, sem clone, sem PR intermediário |
-| Skills | `/content-engine` disponível por estar no diretório |
-| Ferramentas | `beats.py` e `build_prompts.py` rodam sobre os arquivos reais |
-| Intervalo mínimo | 1 minuto contra 1 hora |
-| Transferência | acaba o vaivém de zip e patch |
-
-## Limitações, e elas são reais
-
-1. **A máquina precisa estar ligada com o app aberto.** Se dormir no horário, a execução
-   é pulada. O Desktop faz **uma** execução de recuperação ao acordar, para o horário
-   perdido mais recente dos últimos 7 dias, e descarta o resto. Uma semana de viagem
-   gera uma pesquisa só, não sete.
-2. **Cuidado com o horário da recuperação.** Uma tarefa das 9h pode disparar às 23h se o
-   computador ficou dormindo. Se isso importar, o prompt precisa se defender: "se já
-   passou das 18h, apenas registre o que foi perdido".
-3. **Notificação fica no desktop.** Não chega no celular como chegava na rotina de nuvem.
-4. **Só gatilho de horário.** Nada de disparo por API nem por evento do GitHub.
-5. **Dependência de uma máquina.** O repositório no GitHub é o que impede isso de virar
-   ponto único de falha do projeto, mas a rotina em si morre com o PC.
-6. **Prompt de permissão trava a execução.** Depois de criar a tarefa, clicar em
-   **Run now**, acompanhar e marcar "always allow" em cada ferramenta. Sem isso a
-   execução fica parada esperando aprovação que ninguém vai dar às 9h.
-
-## Requisito que não é opcional
+## Requisito comum
 
 Login pela conta claude.ai, não por chave de API. Se o rodapé do CLI mostrar
-**API Usage Billing** e `Not logged in`, rodar `/login`. Chave de API em
-`ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN` ou `apiKeyHelper` no `settings.json` tem
-precedência sobre a conta e precisa sair primeiro.
+**API Usage Billing** e `Not logged in`, rodar `/login`. Chave em `ANTHROPIC_API_KEY`,
+`ANTHROPIC_AUTH_TOKEN` ou `apiKeyHelper` no `settings.json` tem precedência sobre a
+conta e precisa sair primeiro.
 
-## Por que não deixar a rotina produzir sozinha
+## Por que a produção não vira automática
 
-O `--auto` existe e funciona, mas produzir sem revisão humana é ruim aqui por dois
-motivos concretos: o roteiro afirma lei e valor em dólar, onde um erro custa
-credibilidade, e a escolha de trilho decide gasto de geração de imagem. Rotina pesquisa
-e propõe. Pessoa escolhe. Motor produz.
+O `--auto` existe, mas produzir sem revisão é ruim aqui por dois motivos concretos: o
+roteiro afirma lei e valor em dólar, onde um erro custa a credibilidade que a peça
+existe para construir, e a escolha de trilho decide gasto de geração de imagem.
+
+Rotina pesquisa e propõe. Pessoa escolhe. Motor produz.
