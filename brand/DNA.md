@@ -7,9 +7,10 @@ Campos marcados `TODO` precisam ser preenchidos por você antes da primeira publ
 
 ## 1. Identidade
 
-- **Empresa:** TODO (nome comercial)
+- **Marcas:** duas, `sharon-maid` e `victoria-general`. Cada uma tem paleta e registro
+  próprios em `brand/brands/`. Tudo o mais neste arquivo é comum às duas.
 - **Vertical ativa:** limpeza e manutenção predial (residencial + comercial)
-- **Mercado geográfico:** Flórida, EUA. Cidade e raio de atendimento: TODO
+- **Mercado geográfico:** Flórida, EUA. Cidade e raio de atendimento: TODO por marca
 - **Idioma do conteúdo:** inglês (EUA)
 - **Idioma do trabalho interno:** português
 
@@ -89,21 +90,25 @@ reais e o que a vistoria realmente checa. A prestação de serviço é a consequ
 7. **Sem travessão (em dash) em nenhuma saída.** Vírgula, dois-pontos, parênteses
    ou hífen simples. Travessão quebra a cadência do TTS.
 
-## 6. Tokens visuais
+## 6. Papéis de cor
 
-Trocáveis. Todo style block referencia estes nomes, não os valores.
+O motor não conhece cor, só papel. As cenas escrevem `{INK_DESC}`, `{PRIMARY_DESC}` e
+afins; a marca escolhida em `--brand` resolve cada papel para nome e hex.
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `BASE` | `#F4F1EC` | fundo claro, papel quente |
-| `INK` | `#16202B` | texto, traço, fundo escuro |
-| `SLATE` | `#64748B` | elemento neutro, secundário |
-| `PRIMARY` | `#12A594` | acento de marca, elemento herói |
-| `SIGNAL` | `#E5484D` | somente custo, risco, prazo vencendo |
-| `AMBER` | `#F5A524` | destaque secundário, atenção suave |
+| Papel | Função |
+|-------|--------|
+| `BASE` | fundo da tela |
+| `INK` | texto, traço, massa escura. Sem ele o rótulo não lê em celular. |
+| `NEUTRAL` | elemento de apoio, sem peso narrativo |
+| `PRIMARY` | acento de marca, elemento herói |
+| `SECONDARY` | destaque suave |
+| `SIGNAL` | **somente** custo, risco, prazo vencendo |
 
-Regra de uso: `SIGNAL` nunca decora. Ele só aparece quando a narração está falando
-de perda, custo ou prazo. Se aparecer em toda peça, perde a função.
+Regra de uso: `SIGNAL` nunca decora. Se aparecer em todo beat, perde a função e o
+espectador para de notar o beat que importa.
+
+Valores em `brand/brands/<marca>.palette`. Trocar um hex ali regenera todos os prompts
+sem tocar em nenhuma cena.
 
 ## 7. Formatos e proporções
 

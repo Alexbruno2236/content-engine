@@ -65,25 +65,36 @@ compete com gordura saindo de uma boca de fogão em tempo real.
 # timecodes cumulativos a 2,5 palavras por segundo
 python3 tools/beats.py output/<slug>/beats.txt
 
-# monta o .txt de prompts anexando style block e closer a cada cena
-python3 tools/build_prompts.py output/<slug>/scenes.txt --ratio 9:16 \
-  > output/<slug>/<slug>-prompts.txt
+# monta o .txt de prompts resolvendo os papéis de cor pela marca escolhida
+python3 tools/build_prompts.py output/<slug>/scenes.txt --brand sharon-maid \
+  > output/<slug>/prompts-sharon-maid.txt
 ```
 
 ## Piloto
 
 `output/fl-deposit-deadline-2026/` é a peça de referência: o prazo de caução da Flórida
-sob a Fla. Stat. 83.49, 60 segundos, 27 beats, 150 palavras. Serve para medir custo e
-tempo reais de ponta a ponta antes de industrializar.
+sob a Fla. Stat. 83.49, 60 segundos, 27 beats, 150 palavras. Um roteiro só, dois jogos
+de prompts, um por marca. Serve para medir custo e tempo reais de ponta a ponta antes
+de industrializar.
 
 `output/co-deposit-rule-2026/` é a versão do Colorado, escrita antes do mercado ser
 definido. Fica como modelo de estrutura, marcada como não publicável.
 
+## Duas marcas
+
+`sharon-maid` e `victoria-general`. O roteiro é comum às duas, porque o tom proíbe
+menção de marca dentro da narração. Só a pele visual muda, via `--brand`.
+
+O motor **não** gera as duas versões de uma vez, de propósito. Publicar a mesma peça
+nas duas contas no mesmo mercado derruba o alcance de uma das cópias e faz as empresas
+disputarem o mesmo espectador. A divisão editorial entre elas está em aberto e está
+descrita no fim de `brand/brands/victoria-general.md`.
+
 ## Antes da primeira publicação
 
-Preencher os `TODO` restantes em `brand/DNA.md`: nome da empresa, cidade e raio de
-atendimento, e a legenda padrão. O mercado já está definido como Flórida, e é isso que
-determina a legislação citada e a prioridade das tendências.
+Preencher os `TODO`: cidade e raio de atendimento e legenda padrão, em cada arquivo de
+`brand/brands/`. E aprovar os tokens derivados (`INK` e `SIGNAL` da Sharon Maid, `INK` e
+`NEUTRAL` da Victoria), que eu propus porque as paletas entregues não os tinham.
 
 ## Roadmap
 

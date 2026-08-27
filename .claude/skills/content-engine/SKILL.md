@@ -27,6 +27,10 @@ peça de vídeo narrada completa e pronta para produção.
 
 - `<slug>` primeiro argumento posicional. Pula o STATE 1 e entra direto no tópico.
   Sempre um slug do índice de `trends/`, nunca texto livre. Ex: `co-deposit-rule-2026`.
+- `--brand <marca>` **obrigatório para gerar prompts**. `sharon-maid` ou
+  `victoria-general`. Resolve os papéis de cor. Se ausente no STATE 7, pergunte qual
+  marca e pare. Nunca gere as duas de uma vez: publicar a mesma peça nas duas contas
+  no mesmo mercado derruba o alcance de uma das cópias.
 - `--style <nome>` estilo visual, padrão `motion-design`. Ver `brand/styles/`.
 - `--ratio <proporção>` padrão `9:16`.
 - `--auto` executa STATE 1 a 9 sem parar, escolhendo a tendência de maior prioridade
@@ -61,9 +65,11 @@ Sem perguntar nada, leia e absorva, nesta ordem:
 
 1. `brand/DNA.md` — identidade, serviços, público, regras invioláveis, tokens.
 2. `brand/narration-dna.md` — tom, abertura fria, regra dos 60 por cento, fechamentos.
-3. `brand/styles/<style>.md` — style block, closer e prompt universal de vídeo.
-4. O arquivo mais recente de `trends/` — tendências disponíveis.
-5. `queue.md` — o que já foi escolhido e o que já foi produzido, para não repetir.
+3. `brand/styles/<style>.md` — regras de composição e prompt universal de vídeo.
+   Os blocos ficam em `<style>.style` e `<style>.closer`, com papéis de cor.
+4. `brand/brands/<marca>.palette` — resolve os papéis de cor da marca escolhida.
+5. O arquivo mais recente de `trends/` — tendências disponíveis.
+6. `queue.md` — o que já foi escolhido e o que já foi produzido, para não repetir.
 
 Esses arquivos sobrescrevem qualquer instinto genérico seu. Se algum estiver ausente,
 diga qual falta e pare.
@@ -205,6 +211,9 @@ um fundo que serve à história. Nunca ilustre a frase inteira. Visualize a IDEI
 
 Cada prompt, em prosa corrida num bloco só:
 
+0. **CORES SÃO PAPÉIS.** Escreva `{INK_DESC}`, `{PRIMARY_DESC}`, `{SIGNAL_DESC}`,
+   `{BASE_DESC}`, `{NEUTRAL_DESC}`, `{SECONDARY_DESC}`. Nunca um nome de cor literal e
+   nunca um hex. A marca resolve na geração. Cor literal na cena quebra a segunda marca.
 1. **CENA:** a composição concreta do beat. Um herói dominando ~70 por cento do peso,
    2 a 3 elementos de apoio no máximo, espaço negativo generoso. Se o beat carrega
    data, valor ou nome, ele pode virar UM rótulo de 1 a 4 palavras. Fora isso, sem texto.
@@ -219,7 +228,16 @@ Formato do arquivo, feed de geração em lote:
 - Cada bloco totalmente autossuficiente, com style block e closer completos, para
   rodar sozinho.
 
-Salve como `output/<slug>/<slug>-prompts.txt` e entregue o arquivo.
+Salve as cenas em `output/<slug>/scenes.txt`, uma por linha, na ordem dos beats. Gere
+o arquivo final com a ferramenta, nunca montando os blocos à mão:
+
+```bash
+python3 tools/build_prompts.py output/<slug>/scenes.txt --brand <marca> \
+  > output/<slug>/prompts-<marca>.txt
+```
+
+O script anexa style block e closer a cada cena e resolve os papéis de cor. Ele também
+avisa se sobrou algum placeholder. Entregue o `.txt` resultante.
 
 > Se o estilo for `real-footage`, este estado gera `shotlist.md` em vez do `.txt`,
 > conforme `brand/styles/real-footage.md`.

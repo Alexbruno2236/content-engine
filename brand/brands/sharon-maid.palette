@@ -1,0 +1,16 @@
+# Sharon Maid. Tokens usados pelos style blocks.
+# OFICIAIS: turquesa, rosa e cinza claro, fornecidos pela marca.
+# DERIVADOS: INK e SIGNAL nao existiam na paleta e sao necessarios. Ver o .md.
+NAME=Sharon Maid
+BASE=#FFFFFF
+INK=#0B2B2A
+NEUTRAL=#D0CDCE
+PRIMARY=#0ABAB5
+SECONDARY=#FB9FDE
+SIGNAL=#EE4FB6
+BASE_DESC=clean white
+INK_DESC=near-black deep teal
+NEUTRAL_DESC=warm light gray
+PRIMARY_DESC=turquoise
+SECONDARY_DESC=soft pink
+SIGNAL_DESC=deep magenta pink

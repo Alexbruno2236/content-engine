@@ -1,0 +1,16 @@
+# Victoria General Cleaning. Tokens usados pelos style blocks.
+# OFICIAIS: os quatro fornecidos pela marca.
+# DERIVADOS: INK e NEUTRAL nao existiam na paleta e sao necessarios. Ver o .md.
+NAME=Victoria General Cleaning
+BASE=#FFFFFF
+INK=#1B1140
+NEUTRAL=#A9B4C2
+PRIMARY=#60DBFD
+SECONDARY=#FEADFF
+SIGNAL=#FF30C8
+BASE_DESC=clean white
+INK_DESC=near-black deep violet
+NEUTRAL_DESC=cool light gray
+PRIMARY_DESC=bright sky blue
+SECONDARY_DESC=soft pink
+SIGNAL_DESC=hot magenta
