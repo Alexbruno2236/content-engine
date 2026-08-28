@@ -8,6 +8,29 @@ como elemento de composição, muito espaço negativo.
 
 ---
 
+## Gerador
+
+**GPT Image 2**, decidido no teste de 27 de agosto de 2026. Fidelidade a instrução
+visivelmente melhor que a alternativa testada (Nano Banana 2 via Google Flow), sobretudo
+em simetria, uniformidade de grade e obediência a restrição negativa.
+
+Proporção precisa ser configurada no gerador, separadamente. O `9:16` escrito no closer
+quase nunca é obedecido por texto.
+
+### O que aprendemos sobre como escrever cena
+
+1. **Nunca dependa de contagem exata.** Pedir "trinta quadrados" produzia grade
+   irregular. Pedir "quadrados uniformes em linhas completas" produziu trinta
+   naturalmente, porque grade regular de calendário dá trinta sozinha. O número vive no
+   rótulo, que sai correto.
+2. **Alinhamento se resolve por construção, não por adjetivo.** Pedir "dois quadros em
+   registro perfeito" produzia dois quadros desalinhados, porque dois objetos visíveis
+   são dois objetos que podem divergir. Um objeto com aresta interna dupla não tem como
+   desalinhar.
+3. **Restrição negativa funciona.** O closer proibindo forma e cor decorativa não pedida
+   eliminou os retângulos e quadrados que apareciam sozinhos.
+4. **Centralização exata não vale a briga.** Enquadramento resolve melhor na edição.
+
 ## Regras de composição (valem para todo beat)
 
 1. **Um elemento herói** dominando cerca de 70 por cento do peso visual.
